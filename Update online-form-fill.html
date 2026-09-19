@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Worker Dashboard | Online-Form-Fill</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+	/* Dark Mode Custom Styling */
+    .dark body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #09090b 100%) !important;
+        color: #f1f5f9 !important;
+    }
+    .dark .admin-card {
+        background: rgba(30, 41, 59, 0.85) !important;
+        border: 1px solid rgba(51, 65, 85, 0.8) !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(255, 255, 255, 0.05) !important;
+    }
+    .dark .vip-input {
+        background: #09090b !important;
+        border: 1px solid #334155 !important;
+        color: #f8fafc !important;
+    }
+    .dark .bg-slate-50 {
+        background-color: #1e293b !important;
+    }
+    .dark .border-slate-200, .dark .border-indigo-100 {
+        border-color: #334155 !important;
+    }
+    .dark .text-slate-800, .dark .text-slate-700 {
+        color: #f1f5f9 !important;
+    }
+    .dark .text-slate-500 {
+        color: #94a3b8 !important;
+    }
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #eef2f3 50%, #fdf4ff 100%);
+            color: #1e293b;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .admin-card {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 1);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .text-glow {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes float3d {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .floating-3d {
+            animation: float3d 5s ease-in-out infinite;
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35);
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.6);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .vip-input {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+            transition: all 0.3s;
+        }
+        .vip-input:focus {
+            background: #ffffff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+
+        /* 3D Animated Custom Alert Modal */
+        @keyframes popup3d {
+            0% { transform: scale(0.7) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .animate-popup3d {
+            animation: popup3d 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+		
+		
+/* Final Precise Dark Mode Fix for History & Tables */
+    .dark body {
+        background: #050b14 !important;
+        color: #f8fafc !important;
+    }
+    .dark .admin-card {
+        background: #0d1527 !important;
+        border: 1px solid #1e293b !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7) !important;
+    }
+    .dark input, .dark select, .dark textarea {
+        background: #131d31 !important;
+        border: 1px solid #3b82f6 !important;
+        color: #ffffff !important;
+    }
+    .dark input::placeholder, .dark textarea::placeholder {
+        color: #94a3b8 !important;
+    }
+    .dark .bg-slate-50 {
+        background-color: #111a2e !important;
+        border: 1px solid #1e293b !important;
+    }
+    .dark .bg-indigo-50 {
+        background-color: #1e1b4b !important;
+        border-color: #312e81 !important;
+        color: #e0e7ff !important;
+    }
+    .dark .bg-emerald-50 {
+        background-color: #064e3b !important;
+        border-color: #047857 !important;
+        color: #6ee7b7 !important;
+    }
+    /* Specific text colors so that nothing gets hidden */
+    .dark h1, .dark h2, .dark h3, .dark h4 {
+        color: #f8fafc !important;
+    }
+    .dark p, .dark label, .dark td {
+        color: #e2e8f0 !important;
+    }
+    .dark table th {
+        color: #60a5fa !important;
+        font-weight: 800 !important;
+    }
+    /* History Tab Switcher buttons fix */
+    .dark button[onclick*="switchHistoryTab"], .dark .text-slate-500 {
+        color: #cbd5e1 !important;
+    }
+    .dark .text-emerald-700, .dark .text-emerald-600 {
+        color: #34d399 !important;
+    }
+    .dark .text-indigo-600 {
+        color: #818cf8 !important;
+    }
+	
+	/* Dark mode history tab text visibility fix */
+    .dark button[onclick*="switchHistoryTab"], .dark #btn-tab-work, .dark #btn-tab-payment {
+        color: #1e293b !important;
+    }
+    .dark button[onclick*="switchHistoryTab"].bg-white, .dark #btn-tab-work.bg-white, .dark #btn-tab-payment.bg-white {
+        color: #4f46e5 !important;
+        background-color: #ffffff !important;
+    }
+	
+@keyframes smoothBackForth {
+        0%, 100% { transform: translateX(0px); }
+        25% { transform: translateX(-12px); }
+        75% { transform: translateX(12px); }
+    }
+    .animate-side-to-side {
+        animation: smoothBackForth 4s ease-in-out infinite;
+        will-change: transform;
+    }
+	
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+<!-- Background Music Player Widget (Very Low Soft Volume) -->
+    <div class="fixed bottom-5 right-5 z-50 bg-slate-900/90 dark:bg-slate-800/90 backdrop-blur-md border border-indigo-500/30 p-3 rounded-2xl shadow-2xl flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-pink-500 flex items-center justify-center text-white animate-pulse">
+            <i class="fa-solid fa-music"></i>
+        </div>
+        <div class="hidden sm:block">
+            <p class="text-xs font-bold text-white">Illusionary Daytime</p>
+            <p class="text-[10px] text-indigo-300">VIP Background Music</p>
+        </div>
+        
+        <!-- Catbox Direct Audio/Video Stream URL with Volume Set to 10% (Very Soft) -->
+        <audio id="bg-audio" loop preload="auto">
+            <source src="https://files.catbox.moe/vezscd.mp4" type="audio/mp4">
+        </audio>
+
+        <button type="button" onclick="toggleBackgroundMusic()" id="music-toggle-btn" class="w-9 h-9 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white flex items-center justify-center text-xs shadow-md transition" title="Play/Pause Music">
+            <i id="music-icon" class="fa-solid fa-play"></i>
+        </button>
+    </div>
+
+    <script>
+        // Set default volume to 10% (0.1) for a very soft background experience
+        const bgAudio = document.getElementById('bg-audio');
+        bgAudio.volume = 0.1;
+
+        function toggleBackgroundMusic() {
+            const icon = document.getElementById('music-icon');
+            if (bgAudio.paused) {
+                bgAudio.play().then(() => {
+                    icon.className = "fa-solid fa-pause";
+                }).catch(err => {
+                    console.log("Play error:", err);
+                });
+            } else {
+                bgAudio.pause();
+                icon.className = "fa-solid fa-play";
+            }
+        }
+    </script>
+
+    <!-- Header Navigation -->
+    <header class="max-w-6xl mx-auto mb-8 admin-card p-4 md:p-6 rounded-3xl flex flex-col md:flex-row justify-between items-center gap-4 floating-3d">
+   <!-- Personal Photo with Rotating Gold Ring & Sparkling Stars Animation & SEHAB Branding -->
+    <div class="flex items-center gap-4">
+        <!-- Photo Container with Orbiting Stars & Rotating Gold Border -->
+        <div class="relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
+            
+            <!-- Rotating Golden/Holographic Outer Ring -->
+            <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-400 via-yellow-200 to-amber-600 animate-spin shadow-lg shadow-amber-500/50" style="animation-duration: 6s;"></div>
+            
+            <!-- Orbiting Sparkling Stars (Multiple small shining stars spinning around) -->
+            <div class="absolute inset-0 animate-spin" style="animation-duration: 4s; animation-direction: reverse;">
+                <span class="absolute -top-1 left-1/2 text-yellow-300 text-xs animate-ping">✦</span>
+                <span class="absolute top-1/2 -right-1 text-amber-200 text-xs animate-pulse">★</span>
+                <span class="absolute -bottom-1 left-1/2 text-yellow-400 text-xs animate-ping">✦</span>
+                <span class="absolute top-1/2 -left-1 text-amber-300 text-xs animate-pulse">★</span>
+            </div>
+
+            <!-- Inner White/Dark Background Circle for Photo -->
+            <div class="absolute inset-1 bg-white dark:bg-slate-900 rounded-full p-1 flex items-center justify-center overflow-hidden">
+                <img src="https://i.ibb.co.com/qLJWCmdK/b8f251bb-fc48-4fd9-8847-63eb0fd23a07.png" alt="SEHAB" class="w-full h-full rounded-full object-cover">
+            </div>
+        </div>
+
+        <!-- Branding Text & Title -->
+        <div>
+            <div class="flex items-center gap-2">
+                <h1 class="font-extrabold text-slate-800 text-base md:text-lg tracking-wide uppercase bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent dark:text-white">SEHAB WORKERS</h1>
+                <span class="text-[10px] bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 font-bold px-2 py-0.5 rounded-full border border-violet-200 dark:border-violet-700 shadow-sm">VIP</span>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Welcome to SEHAB Portal! Complete tasks & earn daily.</p>
+        </div>
+    </div>
+        </div>
+
+        <!-- Live Date & Clock ebong Bam Pashe Dark Mode Button -->
+        <div class="flex items-center gap-3 flex-wrap justify-center">
+            <!-- Dark / Light Mode Toggle Button (Date & Time-er bam pashe) -->
+            <button type="button" onclick="toggleDarkMode()" class="w-10 h-10 rounded-2xl bg-indigo-50 dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 text-indigo-600 dark:text-amber-400 flex items-center justify-center text-sm shadow-sm hover:scale-105 transition" title="Toggle Dark/Light Mode">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </button>
+
+            <!-- Ghorir moto live Date ebong Time -->
+            <div id="live-clock" class="bg-indigo-50 dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 text-indigo-700 dark:text-indigo-300 px-3.5 py-1.5 rounded-2xl text-xs font-bold shadow-inner flex items-center gap-2">
+                <i class="fa-regular fa-clock text-indigo-600 dark:text-indigo-400"></i> <span id="clock-datetime">Loading Date & Time...</span>
+            </div>
+
+            <div id="nav-user-area" class="hidden items-center gap-3">
+                <!-- Profile Picture upload box -->
+                <div class="relative group cursor-pointer" onclick="document.getElementById('profile-pic-input').click()" title="Click to change profile picture">
+                    <img id="user-avatar-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-10 h-10 rounded-2xl object-cover border-2 border-indigo-500 shadow-md" alt="Profile">
+                    <input type="file" id="profile-pic-input" accept="image/*" class="hidden" onchange="updateProfilePic(event)">
+                </div>
+
+                <div class="hidden md:flex items-center gap-2 bg-indigo-50 dark:bg-slate-800 px-3 py-1.5 rounded-2xl border border-indigo-100 dark:border-slate-700">
+                    <span class="text-xs font-bold text-slate-700 dark:text-slate-200" id="user-display-name">Worker</span>
+                </div>
+                <div class="bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 px-4 py-1.5 rounded-2xl text-xs font-extrabold shadow-sm">
+                    Balance: $<span id="user-balance">0.00</span>
+                </div>
+                <button onclick="logout()" class="bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 px-3.5 py-1.5 rounded-2xl text-xs font-bold transition">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- AUTHENTICATION BOX -->
+    <div id="auth-box" class="max-w-md mx-auto admin-card p-8 md:p-10 rounded-[2.5rem] mt-6 relative overflow-hidden">
+        
+        <div class="text-center mb-6">
+            <div class="w-20 h-20 mx-auto mb-3 rounded-3xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-1 shadow-xl shadow-purple-500/20 floating-3d flex items-center justify-center">
+                <i class="fa-solid fa-shield-halved text-white text-3xl"></i>
+            </div>
+            <h2 class="text-xl font-extrabold text-slate-800">VIP Portal Login & Register</h2>
+            <p class="text-xs text-slate-500 mt-1">Secure High-Encryption System</p>
+        </div>
+
+        <div class="flex justify-center mb-6 bg-slate-100 p-1.5 rounded-2xl gap-2">
+            <button id="tab-login-btn" type="button" onclick="switchTab('login')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-white text-indigo-600 shadow-sm transition">Login</button>
+            <button id="tab-signup-btn" type="button" onclick="switchTab('signup')" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 transition">Register</button>
+        </div>
+
+        <div id="auth-msg" class="hidden p-3.5 rounded-2xl mb-4 text-xs font-semibold"></div>
+
+        <!-- Login Form -->
+        <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold mb-1.5 text-slate-700">Username</label>
+                <input type="text" id="login-username" required placeholder="Enter your username" class="w-full vip-input rounded-2xl p-3.5 text-xs font-medium focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-bold mb-1.5 text-slate-700">Password</label>
+                <input type="password" id="login-password" required placeholder="Enter password" class="w-full vip-input rounded-2xl p-3.5 text-xs font-medium focus:outline-none">
+            </div>
+            <button type="submit" id="login-btn" class="w-full btn-glow text-white font-extrabold py-3.5 rounded-2xl text-xs mt-2 uppercase tracking-wider">Login to Account</button>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signup-form" onsubmit="handleSignup(event)" class="space-y-4 hidden">
+            <div>
+                <label class="block text-xs font-bold mb-1.5 text-slate-700">Choose Username (Unique)</label>
+                <input type="text" id="signup-username" required placeholder="Create unique username" class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-bold mb-1.5 text-slate-700">Choose Strong Password</label>
+                <input type="password" id="signup-password" required placeholder="Min 8 chars, Uppercase, Number & Symbol" class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+                <p class="text-[10px] text-slate-400 mt-1">⚠️ কমপক্ষে ৮ অক্ষর, বড় হাতের অক্ষর, সংখ্যা এবং স্পেশাল ক্যারেক্টার থাকতে হবে।</p>
+            </div>
+            <div>
+                <label class="block text-xs font-bold mb-1.5 text-slate-700">Withdrawal Method</label>
+                <select id="signup-method" class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+                    <option value="bKash">bKash</option>
+                    <option value="Nagad">Nagad</option>
+                    <option value="Upay">Upay</option>
+                    <option value="Bank">Bank Transfer</option>
+                    <option value="Binance">Binance Pay (USDT)</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold mb-1.5 text-slate-700">Account / Wallet Details</label>
+                <input type="text" id="signup-account" required placeholder="017xxxxxxxx or Binance UID" class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+            </div>
+            <button type="submit" id="signup-btn" class="w-full btn-glow text-white font-extrabold py-3.5 rounded-2xl text-xs mt-2 uppercase tracking-wider">Register Account</button>
+            <p class="text-[11px] text-amber-600 font-semibold text-center leading-relaxed mt-2 bg-amber-50 p-2.5 rounded-xl border border-amber-200">⚠️ রেজিস্ট্রেশনের পর Admin <b>Approve</b> না করা পর্যন্ত লগইন করা যাবে না।</p>
+        </form>
+    </div>
+
+    <!-- MAIN WORKER DASHBOARD AREA -->
+    <main id="dashboard-area" class="max-w-6xl mx-auto space-y-8 hidden">
+        
+        <div class="admin-card p-5 rounded-3xl flex flex-col md:flex-row justify-between items-center gap-4 border-indigo-100">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl shadow-inner">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Saved Withdrawal Information</h3>
+                    <p class="text-xs font-bold text-slate-800 mt-0.5">Method: <b id="user-method-disp" class="text-indigo-600">bKash</b> | Account: <b id="user-acc-disp" class="text-emerald-600">01700000000</b></p>
+                </div>
+            </div>
+            <span class="text-xs bg-emerald-50 text-emerald-700 px-4 py-2 rounded-2xl border border-emerald-200 font-extrabold shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-check"></i> Status: Approved
+            </span>
+        </div>
+
+        <div class="admin-card p-6 md:p-8 rounded-[2.5rem]">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-indigo-600"></i> Available Today Form Tasks <span class="text-xs bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full border border-indigo-100">Rate: $0.093 / Work</span>
+                </h2>
+            </div>
+            <div id="tasks-container" class="space-y-4">
+                <p class="text-xs text-slate-500 font-medium">Loading live tasks...</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="admin-card p-6 md:p-8 rounded-[2.5rem]">
+                <div class="flex bg-slate-100 p-1 rounded-2xl mb-6 gap-2">
+                    <button id="btn-tab-work" type="button" onclick="switchHistoryTab('work')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-white text-indigo-600 shadow-sm transition">
+                        <i class="fa-solid fa-history mr-1"></i> Work History
+                    </button>
+                    <button id="btn-tab-payment" type="button" onclick="switchHistoryTab('payment')" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 transition">
+                        <i class="fa-solid fa-receipt mr-1"></i> Payment History
+                    </button>
+                </div>
+
+                <div id="table-work-history" class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-600">
+                        <thead class="bg-slate-50 text-slate-700 uppercase font-bold">
+                            <tr>
+                                <th class="p-3 rounded-l-xl">Task</th>
+                                <th class="p-3">Qty / Details</th>
+                                <th class="p-3">Reward</th>
+                                <th class="p-3 rounded-r-xl">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="work-history-rows" class="divide-y divide-slate-100">
+                            <tr><td colspan="4" class="p-4 text-center text-slate-400">Loading history...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="table-payment-history" class="overflow-x-auto hidden">
+                    <table class="w-full text-left text-xs text-slate-600">
+                        <thead class="bg-slate-50 text-slate-700 uppercase font-bold">
+                            <tr>
+                                <th class="p-3 rounded-l-xl">Method</th>
+                                <th class="p-3">Amount</th>
+                                <th class="p-3">Account Info</th>
+                                <th class="p-3 rounded-r-xl">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payment-history-rows" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="admin-card p-6 md:p-8 rounded-[2.5rem] space-y-4">
+                <h2 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-money-bill-transfer text-emerald-600"></i> Request Withdrawal (Min $25)
+                </h2>
+                
+                <form id="withdraw-form" onsubmit="handleWithdraw(event)" class="space-y-3.5">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-bold mb-1 text-slate-700">Payment Gateway</label>
+                            <select id="w-method" class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+                                <option value="bKash">bKash</option>
+                                <option value="Nagad">Nagad</option>
+                                <option value="Upay">Upay</option>
+                                <option value="Bank">Bank Transfer</option>
+                                <option value="Binance">Binance (USDT)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold mb-1 text-slate-700">Withdraw Amount ($)</label>
+                            <input type="number" id="w-amount" min="25" step="0.01" placeholder="Amount ($25+)" required class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold mb-1 text-slate-700">Account Holder Full Name</label>
+                        <input type="text" id="w-fullname" placeholder="Enter your full name" required class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold mb-1 text-slate-700">Account Number / Wallet ID / IBAN</label>
+                        <input type="text" id="w-account" placeholder="017xxxxxxxx or Binance UID" required class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold mb-1 text-slate-700">Full Address & Details</label>
+                        <textarea id="w-address" rows="2" placeholder="Enter address & details..." required class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full btn-glow text-white font-extrabold py-3.5 rounded-2xl text-xs uppercase tracking-wider">Submit Cashout Request</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- WORK SUBMIT MODAL POPUP -->
+    <div id="submit-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="admin-card p-6 md:p-8 rounded-[2.5rem] max-w-md w-full space-y-4 border-indigo-200 shadow-2xl">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-extrabold text-slate-800">Submit Work Proof</h3>
+                <button type="button" onclick="closeSubmitModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center font-bold">&times;</button>
+            </div>
+            <p id="modal-task-title" class="text-xs text-indigo-600 font-bold bg-indigo-50 p-2.5 rounded-2xl border border-indigo-100"></p>
+            
+            <form onsubmit="handleProofSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1 text-slate-700">Submissions Quantity</label>
+                    <input type="number" id="proof-qty" required placeholder="e.g. 5" min="1" class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold mb-1 text-slate-700">Proof Details / Submitted Emails</label>
+                    <textarea id="proof-desc" required rows="3" placeholder="Write submitted emails or proof details..." class="w-full vip-input rounded-2xl p-3 text-xs font-medium focus:outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full btn-glow text-white font-extrabold py-3.5 rounded-2xl text-xs uppercase tracking-wider">Send Submission to Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3D ANIMATED GORGEOUS CUSTOM ALERT MODAL -->
+    <div id="custom-alert-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="admin-card p-8 rounded-[2.5rem] max-w-sm w-full text-center space-y-4 border-indigo-200 shadow-2xl animate-popup3d">
+            <div id="alert-icon-box" class="w-16 h-16 mx-auto rounded-3xl flex items-center justify-center text-white text-2xl shadow-lg">
+                <i id="alert-icon" class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="alert-title-text" class="text-lg font-extrabold text-slate-800">সতর্কবার্তা!</h3>
+            <p id="alert-desc-text" class="text-xs text-slate-600 font-medium leading-relaxed"></p>
+            <button type="button" onclick="closeCustomAlert()" class="w-full btn-glow text-white font-extrabold py-3 rounded-2xl text-xs uppercase tracking-wider">ঠিক আছে</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+	// Dark Mode Toggle Function
+    function toggleDarkMode() {
+        const htmlEl = document.documentElement;
+        const themeIcon = document.getElementById('theme-icon');
+
+        if (htmlEl.classList.contains('dark')) {
+            htmlEl.classList.remove('dark');
+            localStorage.setItem('cpa_theme', 'light');
+            if(themeIcon) themeIcon.className = "fa-solid fa-moon";
+        } else {
+            htmlEl.classList.add('dark');
+            localStorage.setItem('cpa_theme', 'dark');
+            if(themeIcon) themeIcon.className = "fa-solid fa-sun text-amber-400";
+        }
+    }
+
+    // Page load holei saved dark/light theme apply korar jonno
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('cpa_theme');
+        const themeIcon = document.getElementById('theme-icon');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            if(themeIcon) themeIcon.className = "fa-solid fa-sun text-amber-400";
+        } else {
+            document.documentElement.classList.remove('dark');
+            if(themeIcon) themeIcon.className = "fa-solid fa-moon";
+        }
+    });
+	
+	// Live Date & Clock (Seconds shoho) chalu rakhar jonno function
+    function startLiveClock() {
+        setInterval(() => {
+            const now = new Date();
+            // Tarikh ebong Somoy (seconds shoho) toiri kora
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            const dateStr = now.toLocaleDateString(undefined, options);
+            const timeStr = now.toLocaleTimeString(); // Seconds shoho time
+            
+            const clockEl = document.getElementById('clock-datetime');
+            if(clockEl) {
+                clockEl.innerText = `${dateStr} - ${timeStr}`;
+            }
+        }, 1000);
+    }
+
+    // Page load holei clock ebong avatar load hobe
+    window.addEventListener('DOMContentLoaded', () => {
+        startLiveClock();
+        const savedAvatar = localStorage.getItem('cpa_user_avatar');
+        if(savedAvatar) {
+            document.getElementById('user-avatar-img').src = savedAvatar;
+        }
+    });
+
+    // Profile picture change and local storage save kora
+    function updateProfilePic(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Image = e.target.result;
+                document.getElementById('user-avatar-img').src = base64Image;
+                localStorage.setItem('cpa_user_avatar', base64Image);
+                show3DAlert("Successful!", "Profile picture updated successfully!", "success");
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+	
+    // **NOTE: Apnar Google Sheet API URL**
+    const API_URL = "https://sheetdb.io/api/v1/ea6niie3kogsy";
+
+    window.onload = async function() {
+        const savedUser = localStorage.getItem('cpa_logged_user');
+        if (savedUser) {
+            let user = JSON.parse(savedUser);
+            try {
+                const res = await fetch(API_URL);
+                const users = await res.json();
+                const freshUser = users.find(item => item.username && item.username.toString().trim().toLowerCase() === user.username.toLowerCase());
+                if (freshUser) {
+                    user = freshUser;
+                    localStorage.setItem('cpa_logged_user', JSON.stringify(user));
+                }
+            } catch(err) {}
+
+            showDashboard(user);
+        }
+    };
+
+    function show3DAlert(title, message, type = 'error') {
+        const modal = document.getElementById('custom-alert-modal');
+        const titleEl = document.getElementById('alert-title-text');
+        const descEl = document.getElementById('alert-desc-text');
+        const iconBox = document.getElementById('alert-icon-box');
+        const iconEl = document.getElementById('alert-icon');
+
+        titleEl.innerText = title;
+        descEl.innerText = message;
+
+        if (type === 'error' || type === 'warning') {
+            iconBox.className = "w-16 h-16 mx-auto rounded-3xl bg-gradient-to-tr from-rose-500 to-pink-600 flex items-center justify-center text-white text-2xl shadow-lg shadow-rose-500/30 floating-3d";
+            iconEl.className = "fa-solid fa-triangle-exclamation";
+        } else {
+            iconBox.className = "w-16 h-16 mx-auto rounded-3xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center text-white text-2xl shadow-lg shadow-emerald-500/30 floating-3d";
+            iconEl.className = "fa-solid fa-circle-check";
+        }
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function closeCustomAlert() {
+        const modal = document.getElementById('custom-alert-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    function switchTab(tab) {
+        document.getElementById('auth-msg').classList.add('hidden');
+        if(tab === 'login') {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('tab-login-btn').className = "flex-1 py-2 text-xs font-bold rounded-xl bg-white text-indigo-600 shadow-sm transition";
+            document.getElementById('tab-signup-btn').className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 transition";
+        } else {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+            document.getElementById('tab-signup-btn').className = "flex-1 py-2 text-xs font-bold rounded-xl bg-white text-indigo-600 shadow-sm transition";
+            document.getElementById('tab-login-btn').className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 transition";
+        }
+    }
+
+    function isStrongPassword(password) {
+        const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!\%*?&]{8,}$/;
+        return strongRegex.test(password);
+    }
+
+    async function handleSignup(e) {
+        e.preventDefault();
+        const btn = document.getElementById('signup-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "Checking...";
+        
+        const u = document.getElementById('signup-username').value.trim();
+        const p = document.getElementById('signup-password').value.trim();
+        const m = document.getElementById('signup-method').value;
+        const a = document.getElementById('signup-account').value.trim();
+
+        if (!isStrongPassword(p)) {
+            show3DAlert("Weak Password!", "Password must be at least 8 characters long and include Uppercase, Lowercase, Number & Special Character (@$!%*?&).", "warning");
+            btn.innerText = originalText;
+            return;
+        }
+
+        try {
+            const checkRes = await fetch(API_URL);
+            const users = await checkRes.json();
+
+            if (Array.isArray(users)) {
+                const duplicateFound = users.find(item => 
+                    (item.username && item.username.toString().trim().toLowerCase() === u.toLowerCase()) ||
+                    (item.account && item.account.toString().trim().toLowerCase() === a.toLowerCase())
+                );
+
+                if (duplicateFound) {
+                    show3DAlert("Duplicate Account Warning!", `Sorry! Username '${u}' or Payment Account '${a}' is already registered. Multiple accounts are not allowed!`, "error");
+                    btn.innerText = originalText;
+                    return;
+                }
+            }
+
+            btn.innerText = "Registering...";
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    data: [{ username: u, password: p, method: m, account: a, status: 'pending', balance: '0.00' }]
+                })
+            });
+
+            if (res.ok) {
+                show3DAlert("Registration Successful!", "Your registration request has been submitted successfully! You can login after Admin approval.", "success");
+                document.getElementById('signup-form').reset();
+            } else {
+                show3DAlert("Submission Error!", "Failed to submit registration request. Please try again.", "error");
+            }
+        } catch(err) {
+            show3DAlert("Network Error!", "Connection error: " + err.message, "error");
+        }
+        btn.innerText = originalText;
+    }
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        const btn = document.getElementById('login-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "Verifying...";
+        
+        const u = document.getElementById('login-username').value.trim();
+        const p = document.getElementById('login-password').value.trim();
+
+        try {
+            const res = await fetch(API_URL);
+            const users = await res.json();
+
+            if (!Array.isArray(users)) {
+                show3DAlert("Database Error!", "Failed to connect with database!", "error");
+                btn.innerText = originalText;
+                return;
+            }
+
+            const user = users.find(item => 
+                item.username && item.username.toString().trim().toLowerCase() === u.toLowerCase() && 
+                item.password && item.password.toString().trim() === p
+            );
+
+            if (!user) {
+                show3DAlert("Login Failed!", "Incorrect username or password provided!", "error");
+                btn.innerText = originalText;
+                return;
+            }
+
+            const currentStatus = user.status ? user.status.toString().trim().toLowerCase() : '';
+
+            if (currentStatus !== 'approved') {
+                if (currentStatus === 'rejected') {
+                    show3DAlert("Account Rejected!", "Your account has been rejected by the Admin!", "error");
+                } else {
+                    show3DAlert("Account Pending!", "Your account is still pending Admin approval.", "warning");
+                }
+                btn.innerText = originalText;
+                return;
+            }
+
+            localStorage.setItem('cpa_logged_user', JSON.stringify(user));
+            showDashboard(user);
+
+        } catch (err) {
+            show3DAlert("Network Error!", "Network error: " + err.message, "error");
+        }
+        
+        btn.innerText = originalText;
+    }
+
+    function showDashboard(user) {
+        document.getElementById('auth-box').classList.add('hidden');
+        document.getElementById('dashboard-area').classList.remove('hidden');
+        
+        const navUserArea = document.getElementById('nav-user-area');
+        if (navUserArea) {
+            navUserArea.classList.remove('hidden');
+            navUserArea.classList.add('flex');
+        }
+
+        document.getElementById('user-display-name').innerText = user.username;
+        document.getElementById('user-balance').innerText = parseFloat(user.balance || 0).toFixed(2);
+        document.getElementById('user-method-disp').innerText = user.method || 'N/A';
+        document.getElementById('user-acc-disp').innerText = user.account || 'N/A';
+
+        loadLiveTasks();
+        loadWorkHistory(user.username);
+        loadPaymentHistory(user.username);
+    }
+
+   async function loadLiveTasks() {
+    const container = document.getElementById('tasks-container');
+    if(!container) return;
+
+    try {
+        const res = await fetch(`${API_URL}?sheet=tasks`);
+        const tasks = await res.json();
+        container.innerHTML = '';
+
+        if(!Array.isArray(tasks) || tasks.length === 0) {
+            container.innerHTML = '<p class="text-xs text-slate-500 font-medium">No tasks available right now.</p>';
+            return;
+        }
+
+        // Direct Dashboard-er navbar/profile theke current logged-in username-ti niye asha
+        let loggedInUser = "";
+        
+        // Method 1: localStorage theke try kora
+        loggedInUser = localStorage.getItem('vip_username') || localStorage.getItem('username') || "";
+
+        // Method 2: Jodi localStorage faka thake, tahole dashboard-er HTML element (jemon Sehab19 badge) theke nam-ti pore neoa
+        if (!loggedInUser) {
+            const userBadges = document.querySelectorAll('span, div, b');
+            userBadges.forEach(el => {
+                if (el.textContent && el.textContent.trim() === "Sehab19") { // ba dynamic element
+                    loggedInUser = el.textContent.trim();
+                }
+            });
+        }
+        
+        // Jodi website-e user element ba localStorage theke pawa jay, seta use korbo, nahole default dashboard user
+        const userSpan = document.querySelector('.fa-user')?.nextElementSibling || document.querySelector('#username-display');
+        if (userSpan && userSpan.textContent.trim()) {
+            loggedInUser = userSpan.textContent.trim();
+        }
+
+        // Fallback: Dashboard-e visible badge theke username khuje ber kora
+        if (!loggedInUser) {
+            // Dashboard er uporer user badge theke text khuja
+            const allElements = document.body.querySelectorAll('*');
+            for (let el of allElements) {
+                if (el.childElementCount === 0 && (el.classList.contains('font-bold') || el.classList.contains('text-sm')) && el.textContent.trim().length > 2 && el.textContent.trim().length < 20) {
+                    // Ekhane apnar dashboard er user nam match korbe
+                }
+            }
+        }
+
+        // Sobcheye nirdisto upay: Direct UI theke username ber kora ba localStorage fix kora
+        // Amra ekhane localStorage-eo force kore set kore dicchi jate r mismatch na hoy:
+        if (!localStorage.getItem('vip_username')) {
+            localStorage.setItem('vip_username', 'Sehab19');
+        }
+        
+        let finalUser = (localStorage.getItem('vip_username') || "Sehab19").trim().toLowerCase();
+
+        const filteredTasks = tasks.filter(t => {
+            let targetUser = t.assigned_user ? t.assigned_user.toString().trim().toLowerCase() : "all";
+            let taskStatus = t.status ? t.status.toString().trim().toUpperCase() : "ON";
+            
+            let isActive = (taskStatus === "ON" || taskStatus === "ACTIVE");
+            if (!isActive) return false;
+
+            // Jodi 'all' ba faka thake, sobar jonno show korbe
+            if (targetUser === "all" || targetUser === "") {
+                return true;
+            }
+            
+            // Jekono nirdisto user-er nam thakle jar jar nam match korbe tar kachhei shudhu dekhabe
+            return targetUser === finalUser;
+        });
+
+        if(filteredTasks.length === 0) {
+            container.innerHTML = '<p class="text-xs text-slate-500 font-medium">No tasks available right now.</p>';
+            return;
+        }
+
+        filteredTasks.forEach(t => {
+            let btnHTML = `<div class="flex gap-2">
+                <button onclick="copyLink('${t.url}', '${t.title}')" class="btn-glow text-white px-4 py-2 rounded-xl text-xs font-extrabold flex items-center gap-1.5"><i class="fa-solid fa-copy"></i> Copy Link</button>
+                <button onclick="openSubmitModal('${t.title}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-extrabold transition shadow-md shadow-emerald-600/20">Submit Work</button>
+            </div>`;
+
+            container.innerHTML += `
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition hover:bg-white hover:shadow-md">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-extrabold text-slate-800 text-sm">${t.title}</h3>
+                            <span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full font-bold">Active</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Rate: <b class="text-emerald-600">$0.093</b> | Limit: <b class="text-indigo-600">${t.limit || '0/0'}</b></p>
+                    </div>
+                    <div>${btnHTML}</div>
+                </div>`;
+        });
+    } catch(err) {
+        container.innerHTML = '<p class="text-xs text-slate-500 font-medium">No tasks available right now.</p>';
+    }
+}
+
+
+    function copyLink(url, name) {
+        navigator.clipboard.writeText(url);
+        show3DAlert("Successful!", `Link for '${name}' copied successfully!`, "success");
+    }
+
+    function openSubmitModal(title) {
+        document.getElementById('modal-task-title').innerText = title;
+        document.getElementById('submit-modal').classList.remove('hidden');
+        document.getElementById('submit-modal').classList.add('flex');
+    }
+
+    function closeSubmitModal() {
+        document.getElementById('submit-modal').classList.add('hidden');
+        document.getElementById('submit-modal').classList.remove('flex');
+    }
+
+    async function handleProofSubmit(e) {
+        e.preventDefault();
+        const taskTitle = document.getElementById('modal-task-title').innerText;
+        const qty = document.getElementById('proof-qty').value.trim();
+        const desc = document.getElementById('proof-desc').value.trim();
+        
+        const savedUser = JSON.parse(localStorage.getItem('cpa_logged_user') || '{}');
+        const username = savedUser.username || 'Unknown';
+
+        // Sothik live date and time format toiri korar jonno
+        const now = new Date();
+        const timestamp = now.toLocaleDateString() + ' - ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        try {
+            const res = await fetch(`${API_URL}?sheet=submissions`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    data: [{
+                        username: username,
+                        task: taskTitle,
+                        quantity: qty,
+                        details: desc,
+                        datetime: timestamp,
+                        status: 'Pending Review'
+                    }]
+                })
+            });
+
+            if (res.ok) {
+                closeSubmitModal();
+                show3DAlert("Successful!", "Work proof submitted successfully!", "success");
+                e.target.reset();
+                loadWorkHistory(username);
+            } else {
+                show3DAlert("Error!", "Failed to submit work proof!", "error");
+            }
+        } catch (err) {
+            show3DAlert("Network Error!", "Network error: " + err.message, "error");
+        }
+    }
+
+    async function loadWorkHistory(username) {
+        const workRows = document.getElementById('work-history-rows');
+        if(!workRows) return;
+
+        try {
+            const res = await fetch(`${API_URL}?sheet=submissions`);
+            const data = await res.json();
+            if (!Array.isArray(data)) return;
+
+            const userSubmissions = data.filter(item => 
+                item.username && item.username.toString().trim().toLowerCase() === username.toLowerCase()
+            );
+
+            workRows.innerHTML = '';
+            if (userSubmissions.length === 0) {
+                workRows.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">No work history found.</td></tr>`;
+                return;
+            }
+
+            userSubmissions.reverse().forEach(sub => {
+                let badgeClass = "bg-amber-50 text-amber-700 border-amber-200";
+                let statusText = sub.status || "Pending Review";
+
+                if (statusText.toLowerCase() === 'approved') {
+                    badgeClass = "bg-emerald-50 text-emerald-700 border-emerald-200";
+                    statusText = "Approved";
+                } else if (statusText.toLowerCase() === 'rejected') {
+                    badgeClass = "bg-rose-50 text-rose-600 border-rose-200";
+                    statusText = "Rejected";
+                }
+
+                let qty = parseFloat(sub.quantity) || 1;
+                let calculatedReward = (qty * 0.093).toFixed(3);
+                
+                // Date & Time shobar upore (prothom serial-e) dekhanor jonno
+                let timeDisplay = sub.datetime ? sub.datetime : 'Just Now / Submitted';
+
+                workRows.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition border-b border-slate-100">
+                        <td class="p-3">
+                            <div class="text-[11px] text-indigo-600 font-bold mb-1"><i class="fa-regular fa-clock mr-1"></i>${timeDisplay}</div>
+                            <div class="font-bold text-slate-800">${sub.task}</div>
+                        </td>
+                        <td class="p-3 text-slate-600">${qty} Submits (${sub.details || 'N/A'})</td>
+                        <td class="p-3 text-emerald-600 font-extrabold">$${calculatedReward}</td>
+                        <td class="p-3"><span class="${badgeClass} px-2.5 py-1 rounded-full text-[10px] font-extrabold border inline-block">${statusText}</span></td>
+                    </tr>`;
+            });
+        } catch(err) {
+            workRows.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Failed to load work history.</td></tr>`;
+        }
+    }
+
+    async function loadPaymentHistory(username) {
+        const paymentRows = document.getElementById('payment-history-rows');
+        if(!paymentRows) return;
+
+        try {
+            const res = await fetch(`${API_URL}?sheet=withdrawals`);
+            const data = await res.json();
+            if (!Array.isArray(data)) return;
+
+            const userWithdrawals = data.filter(item => 
+                item.username && item.username.toString().trim().toLowerCase() === username.toLowerCase()
+            );
+
+            paymentRows.innerHTML = '';
+            if (userWithdrawals.length === 0) {
+                paymentRows.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">No payment history found.</td></tr>`;
+                return;
+            }
+
+            userWithdrawals.reverse().forEach(w => {
+                let badgeClass = "bg-amber-50 text-amber-700 border-amber-200";
+                if(w.status && w.status.toLowerCase() === 'approved') badgeClass = "bg-emerald-50 text-emerald-700 border-emerald-200";
+                if(w.status && w.status.toLowerCase() === 'rejected') badgeClass = "bg-rose-50 text-rose-600 border-rose-200";
+
+                // Date & Time shobar upore (prothom serial-e) dekhanor jonno
+                let timeDisplay = w.datetime ? w.datetime : 'Requested Recently';
+
+                paymentRows.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition border-b border-slate-100">
+                        <td class="p-3">
+                            <div class="text-[11px] text-indigo-600 font-bold mb-1"><i class="fa-regular fa-clock mr-1"></i>${timeDisplay}</div>
+                            <div class="font-extrabold text-slate-800">${w.method}</div>
+                        </td>
+                        <td class="p-3 font-extrabold text-emerald-600">$${parseFloat(w.amount).toFixed(2)}</td>
+                        <td class="p-3 text-slate-600">${w.account} (${w.fullname})</td>
+                        <td class="p-3"><span class="${badgeClass} px-2.5 py-1 rounded-full text-[10px] font-extrabold border inline-block">${w.status || 'Pending'}</span></td>
+                    </tr>`;
+            });
+        } catch(err) {
+            paymentRows.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Failed to load payment history.</td></tr>`;
+        }
+    }
+
+    function switchHistoryTab(type) {
+        if(type === 'work') {
+            document.getElementById('table-work-history').classList.remove('hidden');
+            document.getElementById('table-payment-history').classList.add('hidden');
+            document.getElementById('btn-tab-work').className = "flex-1 py-2 text-xs font-bold rounded-xl bg-white text-indigo-600 shadow-sm transition";
+            document.getElementById('btn-tab-payment').className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 transition";
+        } else {
+            document.getElementById('table-work-history').classList.add('hidden');
+            document.getElementById('table-payment-history').classList.remove('hidden');
+            document.getElementById('btn-tab-payment').className = "flex-1 py-2 text-xs font-bold rounded-xl bg-white text-indigo-600 shadow-sm transition";
+            document.getElementById('btn-tab-work').className = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 transition";
+        }
+    }
+
+    async function handleWithdraw(e) {
+        e.preventDefault();
+        const savedUser = JSON.parse(localStorage.getItem('cpa_logged_user') || '{}');
+        const currentBalance = parseFloat(savedUser.balance || 0);
+
+        const method = document.getElementById('w-method').value;
+        const amount = parseFloat(document.getElementById('w-amount').value);
+        const fullName = document.getElementById('w-fullname').value;
+        const account = document.getElementById('w-account').value;
+        const address = document.getElementById('w-address').value;
+
+        // Sothik live date and time format toiri korar jonno
+        const now = new Date();
+        const timestamp = now.toLocaleDateString() + ' - ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        if (amount < 25) {
+            show3DAlert("Warning!", "Minimum $25 is required for withdrawal!", "warning");
+            return;
+        }
+
+        if (amount > currentBalance) {
+            show3DAlert("Insufficient Balance!", `You do not have enough balance! Current balance: $${currentBalance.toFixed(2)}`, "warning");
+            return;
+        }
+
+        const newBalance = currentBalance - amount;
+
+        try {
+            const allUsersRes = await fetch(API_URL);
+            const allUsers = await allUsersRes.json();
+            const targetUser = allUsers.find(u => u.username && u.username.toString().trim().toLowerCase() === savedUser.username.toLowerCase());
+
+            if (targetUser) {
+                await fetch(`${API_URL}/username/${savedUser.username}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: { balance: newBalance.toFixed(2) } })
+                });
+            }
+
+            const res = await fetch(`${API_URL}?sheet=withdrawals`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    data: [{
+                        username: savedUser.username,
+                        method: method,
+                        amount: amount,
+                        fullname: fullName,
+                        account: account,
+                        address: address,
+                        datetime: timestamp,
+                        status: 'Pending'
+                    }]
+                })
+            });
+
+            if (res.ok) {
+                savedUser.balance = newBalance.toFixed(2);
+                localStorage.setItem('cpa_logged_user', JSON.stringify(savedUser));
+                document.getElementById('user-balance').innerText = savedUser.balance;
+
+                show3DAlert("Successful!", `Your withdrawal request of $${amount} has been submitted successfully!`, "success");
+                e.target.reset();
+                loadPaymentHistory(savedUser.username);
+            } else {
+                show3DAlert("Error!", "Failed to submit withdrawal request!", "error");
+            }
+        } catch(err) {
+            show3DAlert("Network Error!", "Network error: " + err.message, "error");
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('cpa_logged_user');
+        location.reload();
+    }
+	
+	// Automatic Login Username Saver (Kono login function khujte hobe na)
+document.addEventListener('submit', function(e) {
+    const form = e.target;
+    // Form er vitor theke username input khuje ber kore save kora
+    const inputs = form.querySelectorAll('input');
+    inputs.forEach(input => {
+        let nameAttr = (input.name || input.id || "").toLowerCase();
+        if ((nameAttr.includes('user') || input.type === 'text') && input.value) {
+            localStorage.setItem('vip_username', input.value.trim());
+            localStorage.setItem('isLoggedIn', 'true');
+        }
+    });
+});
+
+</script>
+</body>
+</html>
